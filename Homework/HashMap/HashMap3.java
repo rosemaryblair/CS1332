@@ -7,7 +7,7 @@ import java.util.Set;
  * @author Rosemary Blair
  * @userid rblair8
  * @GTID 903358318
- * @version 3.0
+ * @version 3.0 final
  */
 public class HashMap3<K, V> {
 
