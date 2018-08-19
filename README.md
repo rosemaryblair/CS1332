@@ -1,4 +1,6 @@
 # CS1332
+
+## Coursework
 **Data Structures and Algorithms** - Summer 2018
 
 This is a collection of the assignments I completed throughout the course.
