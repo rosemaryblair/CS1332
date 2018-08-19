@@ -1,0 +1,46 @@
+
+Adding with Rotations: (BST)
+
+	add(T data) { root = add(data, root); }
+	Node add(T data, Node curr) {
+		if (curr == null) {
+			return new Node(data);
+		} else {
+			if (data < curr.data) {
+				curr.left = add(data, curr.left);
+			} else {
+				curr.right = add(data, curr.right);
+			}
+		return rotate(curr);
+		}
+	}
+
+Removing with Rotations:
+	
+AVL Trees:
+	- The Adelson-Velsky and Landis Tree is a self-balancing binary search tree.
+	- For any node, the height of two child subtrees will differ by at most 1.
+		- Reflected in BF of a node.
+	- After add/remove, nodes along the path (from added to root or removed to root) will attempt to rebalance itself.
+		- Every node in the tree does not have to rebalance itself.
+	- Because it is balanced, there will be ~log n levels, so search is O(log n).
+	- Add: finding the spot to add is O(log n) because of our balanced tree.
+
+Storing heights in nodes:
+	- Storing heights in nodes instead of calling O(n) height() method.
+	- By storing, we have O(1) access. Default is 0.
+	- To get our height, we call node.height.
+
+Splay tree:
+	- Principle of Locality: same data is frequently accessed.
+	- Temporal locality: reuse of same data.
+	- Spatial locality: data elements within close storage location.
+
+IDEA: 
+	- BST where nonuniform access of data.
+	- Data used is move to the root.
+
+Add - BST add, move added to root
+Search - searched moves to root
+Remove - BST remove, parent -> root
+

@@ -1,0 +1,37 @@
+
+Binary Search Trees:
+
+- Ordered Maps:
+	- Keys are assumed to come from a total order.
+	- Items are stored in order by their keys.
+	- This allows us to support nearest neighbor queries:
+		- Items with largest key less than or equal to k.
+		- Item with smallest key greater than or equal to k.
+
+- Binary search can perform nearrest neighbor queries on an ordered map that is implemented with an array, sorted by key.
+	- AT each step, the number of candidate items is halved, terminates after O(logn) steps.
+
+- A SEARCH TABLE is an ordered map implemented by means of a sorted sequence.
+	- Stored items in an array-based sequence, sorted by key.
+	- Uses external comparator for the key.
+	- Performance:
+		- Search takes O(logn) time w/ binary search
+		- Adding takes O(n) time because of shifting successive items over
+		- Removing takes O(n) time because of compacting/shifting
+	- Look-up table is effective only for oredered maps of small size or for maps on which searches are the most common operations, while add/removes are rarely done.
+
+- A BINARY SEARCH TREE (BST) is a binary tree storing key-value entries at its internal nodes and satisfy the following property:
+	- Let u, v, and w be three nodes such that u is in the left subtree of v and w is in the right subtree of v. We have key(u) <= key(v) <= key(w).
+	- External nodes do not store items.
+	- In-order traversal of a BST visits the keys in increasing order.
+
+- BST Operations:
+	- Search(key): trace a downwards path starting from the root, using comparisons to determine which child node/subtree to traverse to the current node, in order to narrow down the comparisons to nodes w/ subtrees that may contain the key.
+	- Add/put(key, obj): search for key, if not already in the tree, we insert the entry as a leaf node to the most appropriate parent of it (BST property). If the key is already in the tree, then we replace the values associated with the key.
+	- Remove/delete(key): search for key, when found, there are 3 possibilities to what the node could be:
+		1. A leaf node- 0 children: simply change its parent's pointer (prev. pointing to the node with key) to null, the node eventually is garbage collected. Return null.
+		2. Node has 1 child: let the parent of the node with key point to its one child instead of the node itself, as the child is the only node possible to replace it with and still maintain the BST property. This node will be garbage collected since nothing points to it. Return the child node.
+		3. Node has 2 children: we either can find the predecessor to the node (the largest node that is less than the node, i.e. the rightmost node of the left subtree) or the successor (the smallest node that is greater than the node, i.e. the leftmost node of the right subtree) to replace the node with. When found, copy its data into the node with key. Then, call remove() with the subtree the replacement came from to remove that replacement (since the node with key now contains the data from the replacement instead, need to delete the duplicate). Return the node.
+	- Get(), put(), and remove() are all worst case O(n) and best case O(logn). The determining time used depends on how the BST is structured; if the tree represents something like a LL, where nodes all only have one child (except for leaf) pointing in one direction, this would be O(n). Balanced BSTs operate in O(logn), which is because their height is logn.
+
+AVLs:

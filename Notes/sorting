@@ -1,0 +1,58 @@
+
+- An IN-PLACE sort is a sorting algorithm that doesn't copy over elements into another array/list (creating variables to store a fixed number of items is allowed).
+	- Regardless of length of array to be sorted, a fixed amount of (additional) space is used.
+	- An OUT-OF-PLACE sort is a sorting algorithm that does allocate a variable amount of additional space.
+
+- A STABLE sort is a sort in which the order of the duplicate items is preserved.
+	- Ex. If two 4's (say, 4a near front and 4b at end) exist in the array, 4a will always come before 4b when sorted.
+	- An UNSTABLE sort is a sort in which the order of duplicate items may change.
+
+- An ADAPTIVE sort means that the sorting algorithm takes advantage of existing order in the array.
+
+- COMPARISON sorts are types of sorting algorithms that directly compare two items (e.g. bubble, insertion, selection, merge, quick).
+
+- BUBBLE SORT: O(n^2) sort (avg. case), compares first two items. If in wrong order, swap indices; if not, keep as-is. Then move onto the next two items and repeat until you reach the end of the array. Once at this point, one iteration of bubble sort has been performed.
+	- After 1st iteration, the largest element is in the last spot.
+	- Run the previous two steps in the array again, but don't include the element at the last index since it is sorted. This ends with the 2nd largest at the 2nd to last spot, next to the largest (in order). Repeat until sorted.
+	- Best case performance: O(n) - the array is sorted already, only n-1 comparisons made on first iteration.
+	- Worst case performace: O(n^2) - array is sorted in reverse order, n(n-1)/2 comparisons done total, or (n-1) iterations done for n-1 items.
+	- Average case performace: O(n^2), since number of comparisons is between (n-1) and n(n-1)/2 comparisons.
+	- Runs in-place and is a stable sort.
+	- If no swaps are made during an iteration, this means that the array is sorted and you can terminate early.
+	- Pseudocode:
+		procedure BubbleSort(array)
+			length = length (of array)
+			i = 0
+			swapped = true
+			while i < length - 1 AND swapped is true, do
+				swapped = false
+				for j = 0, length - i - 1, do
+					if array[j] > array[j+1]
+						swapped = true
+					end if
+				end for
+			end while
+		end procedure
+
+
+- INSERTION SORT: O(n^2) sort, assume the first item is sorted, take the second item and "slide" to left so that it is correctly placed in the sorted portion of the array. The first two items are sorted, completing first iteration.
+	- Repeat with third item, until last item until array is sorted.
+	- Fixed number of iterations done for insertion (unlike Bubble).
+	- Pseudocode:
+		procedure InsertionSort(array)
+			length = length (of array)
+			for i = 1, length -1 do
+				j = i
+				while j > 0 and array[j-1] > array[j] do
+					swap array[j-1] and array[j]
+					j = j - 1
+				end while
+			end for
+		end procedure
+	- Best case: O(n), worst case: O(n^2), avg. case: O(n^2)
+	- Runs in-place and is stable sort.
+
+- MERGE SORT: a recursive or "divide-and-conquer" sort (as opposed to iterative), that divides the array into its (2) left and right parts and sorts the parts seperately. Once both halves are sorted, they are merged together using markers on each part to place items into total sorted order. This happens by placing the marker on the first item in each part, taking the smaller of the two and add that into the larger, merged array and move the marker forward. This repeats untill all of the items have been added.
+	- Note that when merging, if all items of one half are added to the larger array, the remaining items in the other half can be directly copied over onto the merged array.
+	- Advantageous because portions of the sorting algorithm can be done in parallel (i.e. in multiple threads).
+	- Remember that an array with length 1 is always sorted (base case).

@@ -1,0 +1,129 @@
+
+// 1. "Populate an int array of size n where each element is equal to its index."
+
+	public int[] createIntArray(int n) {
+		int[] arr = new int[n];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = i;
+		}
+		return arr;
+	}
+
+// 2. "Write a class that stores an int and Node reference."
+
+	public class IntNode {
+		int data;
+		IntNode next;
+
+		public IntNode(int data) {
+			this.data = data;
+		}
+	}
+
+// 3. "Write code that creates 2 nodes and have one node point to the other."
+
+	IntNode a = new IntNode(1);
+	IntNode b = new IntNode(2);
+	a.next = b;
+
+// 4. "On your paper, create a generic node class that holds Integer data and
+//		these two node references. Once created, instantiate two nodes and have
+//		both connected."
+
+	public class Node<E> {
+		E data;
+		Node<E> next, prev;
+		public Node(E data) { this.data = data; }
+	}
+	Node<Integer> a = new Node<>(1);
+	Node<Integer> b = new Node<>(2);
+	a.next = b;
+	b.prev = a;
+	
+// 5. "When we want to add a new node to a DLL: we create a newNode with data and
+//		null prev/next ref., find the node we want to add after (temp) by traversing, 
+//		how do we insert our newNode after temp?"
+
+	newNode.next = temp.next;
+	newNode.prev = temp;
+	temp.next.prev = newNode;
+	temp.next = newNode;
+
+// 6. (Cont.) "We find the node we want to remove (temp). How do remove temp?"
+
+	temp.prev.next = temp.next;
+	temp.next.prev = temp.prev;
+
+// 7. "Complete the operations. Start with an empty stack."
+
+	push(plate1);			//1
+	push(plate2);			//2
+	push(plate3);			//3
+	pop();					//4
+	push(spag&meat);   //5
+	pop();					//6
+	pop();					//7
+
+/* (1-3) 		(4)			(5)			(6-7)
+	
+	plate3					spag&meat
+	plate2		plate2		plate2
+	plate1		plate1		plate1		plate1
+
+*/
+
+//8. "Implement the Stack methods given a SLL object."
+
+	void push(E e) {
+		list.addToHead(e);
+	}
+
+	E pop() {
+		return list.removeHead();
+	}
+
+	E top() {
+		return list.getHead();
+	}
+
+	int size() {
+		return list.size();
+	}
+
+	boolean isEmpty() {
+		return list.isEmpty();
+	}
+
+// 9. "Complete the operations. Start with an empty queue."
+
+	enqueue(plate1);		//1
+	enqueue(plate2);		//2
+	dequeue();				//3
+	enqueue(plate3);		//4
+	enqueue(spag&meat);     //5
+	dequeue();				//6
+	dequeue();				//7
+
+/* (1-2) | plate1 plate2
+	(3)  | plate2
+   (4-5) | plate2 plate3 spag&meat
+   (6-7) | spag&meat
+*/
+
+// 10. "Implement dequeue with the current model."
+
+   enqueue(E e) {
+   		int back = (front + size) % data.length; //if full, exception
+   		data[back] = e;
+   		size++;
+   }
+
+   E dequeue() {
+   		E temp = data[front];
+   		data[front] = null;
+   		front = (front + 1) % data.length;
+   		size--;
+   		return temp;
+   }
+
+

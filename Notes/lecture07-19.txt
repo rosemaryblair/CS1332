@@ -1,0 +1,22 @@
+
+Exam 3/Final:
+
+- CIOS (~80% 0.75pt on final grade, ~90% 1.5pts)
+- 60% new material
+	- Sorting (code)
+	- Pattern Matching (code, tracing, iterations)
+	- Graphs/spanning trees *(code-ish, ordering of given code, also diagramming)
+		- D/BFS, Dijk, Prim's, Kruskal's (not disjoint code)
+	- Dynamic Programming (diagrams)
+		- LCS
+		- Floyd Warshall
+- 40% old material (all multiple choice)
+	- Big o's, methods & their returns, # iterations, tracing
+
+
+Dynamic Programming:
+
+- Longest Common Subsequence (LCS): string of characters 
+	- x = ABACUS
+	- y = AABCSG
+	- LCS = ABCS

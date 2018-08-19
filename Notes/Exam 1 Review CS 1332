@@ -1,0 +1,144 @@
+Exam 1 Review CS 1332
+
+- Topics: Arrays, ArrayLists, LinkedLists (Singly, Doubly, Circular), Stacks,
+	Queues, Deques, Trees (Binary, Binary Search), Heaps (Binary, Array-based),
+	Big-O time complexities, Recursion
+
+- Arrays:
+	- An ARRAY is a contiguous collection of variables all of the same type.
+	- A CELL refers to a container for a single value of data, called an 
+		ELEMENT. Each cell has a numeric location called an INDEX (0, 1, ..., n).
+	- The LENGTH of the array is a fixed property, determining the maximum # of
+		elements it can store. It can be referenced using 'array.length'.
+	- You can create an array in two ways:
+		1. LITERAL: 'int[] myArr = {3, 16, 12, 4};'
+		2. DECLARATION: 'int[] myArr = new int[4];'
+	- You can access/set elements within an array using their indices (e.g. 
+		'myArr[0] = 1;', 'int val = myArr[2];').
+		- Using indices < 0 or > its length will throw an exception.
+	- Storing/finding values can be done using loops.
+		- For example, giving each cell of an array a successive value:
+		char[] myArr = new char[26];
+		for (int i = 0; i < myArr.length; i++) {
+			myArr[i] = (char) ('a' + i);
+		}
+	- PROS:
+		- Constant time setting/accessing of elements.
+		- Very simple.
+	- CONS:
+		- Fixed size. If we wanted to make an array hold more than allowed, we would have to copy the existing elements from the array into a new,
+		larger array element-by-element.
+		- Implement our own methods to manipulate array.
+
+- ArrayList:
+	- ARRAYLIST is a list implementation of a resizable array. When the array is full, the backing array will create a new array of size (1.5 * arr.length) and copy elements from the old array to the new one.
+	- Unlike an array, an ArrayList can only hold class (non-prim.) types.
+	- To create: 'ArrayList<String> = new ArrayList<>();' (default size = 10).
+	- Methods:
+		add(E e) - adds element e to end (1st unused cell) of array, if full, it 
+			will automatically resize the array.
+		add(int i, E e) - inserts element e into array[i], all elements at or after
+			i previously will be shifted to the next cell to accomodate. If it were
+			full, we would resize first then add.
+		remove(int i) - removes element at array[i], all elements after will be
+			shifted to previous cell to fill the gap. There is no resizing with
+			remove(int i), instead 'trimToSize()' can be used to reduce the size.
+	- Accessing/setting elements is O(1) since it uses an array for backing.
+	- Adding/removing from the back is O(1), except for when adding w/ a resize, which would be O(n). This is because you have to iterate through all of the array's elements when copying them over into the newly resized array.
+		- Adding/removing anywhere from the back is O(n) because of shifting.
+	- Searching is O(n) since you must parse through as many as all of the array's elements to find if the desired data exists within it.
+
+- Linked Lists:
+	- A NODE is an object that holds two values: data, and a reference to another node (or null).
+		- We don't need to track of an entire sequence of references to nodes, we only need a reference to the head (or first node) to be able to access all nodes in the sequence (called next until the end).
+	- A SINGLY LINKED LIST is a data structure consisting of a sequence of nodes. Each node has a single pointer to another node (typically called 'next').
+		- Reference to first node is called HEAD.
+	- Methods:
+		addToHead(T t) - adds a new value t before head; create a new node with 
+			given data and make it point to the current head as its next reference. Then set the head reference equal to the new node. 0(1).
+		addToTail(T t) - adds a new value t to the end of the list (tail); create a
+			new node with given data and make its next reference point to null. Have the last node's next ref. point to the new node. To get the last node, you must parse through all nodes until node.next = null. O(n) without a tail reference, O(1) if there is a tail reference (in which case, you'd use the same method as addToHead with the tail).
+		removeHead() - removes the head; set head ref. = head.next, garbage
+			collector reclaim former head. O(1).
+		removeTail() - removes the tail; set tail ref. to tail's previous ref.
+			through iteratively finding the node before tail. O(n).
+	- Add/remove at arbitrary locations will require O(n) time since list must be traversed in linear time to search for the desired node/location.
+		add(int i, E e) - inserts node with data e at index i; if i = 0 or size, 
+			addToHead() or addToTail() should be called. If not, have a temp
+			ref. to head and parse through i-1 times to get (i-1)th node. Set the new node's next ref. to temp's next ref. and set temp's next = new node.
+		remove(int i) - remove the node at i; same as add(int i, E e) except for at 
+			index (i-1), set that node's next = node's next.next to essentially skip over the previous value.
+	- A DOUBLY LINKED LIST is a version of a LL where each node stores data and a ref. to 2 nodes: next & previous.
+	- Adding to head/tail is same for DLL except:
+		- When adding to head, the old head's previous ref. must point to the new head.
+		- When adding to tail, the new tail's prev. must point to the old tail.
+		- Both operations are O(1).
+	- Removing head/tail is similar:
+		- When removing head, new head's prev. points to null. O(1).
+		- Removing the tail can be done in O(1) since we can call tail.prev instead
+		of iterating through all nodes until the one before the last.
+	- Add/remove of arbitrary indices are both O(n) operations b/c you must traverse the list until element is found.
+	- DLL Analysis:
+		- Compared to ArrayList, DLLs are more dynamic.
+		- Accessing/searching any LL is O(n).
+		- Adding/removing head/tail is O(1).
+		- DLLs are useful when you have to manipulate data (used for browser histories, undo history, or programs that require maintaining history).
+		- Although we do store more ref. than SLL, the ref. make operations a lot easier.
+	- A CIRCULARLY LINKED LIST is a LL where the tail's next ref. points to the head instead of null, and head's prev. ref. points to the tail.
+	- Adding/removing behave the same as SLL or DLL.
+	- Used for things that require a loop (e.g. music playlist).
+	- Same cost as regular LL.
+
+- Stacks, Queues, Deques:
+	- An ABSTRACT DATA TYPE (ADT) is a model for data where the data type is defined by the behavior of its operations.
+		- Does not define implementation of its operations; the ADT can only define what it can and can't do.
+		- A data structure will define a specific implementation of an ADT.
+	- A LIST is an example of an ADT, with operations like add(), remove(), get(), size(), etc.
+		- Implementation of a List can be an ArrayList, SLL, DLL, etc.
+	- A STACK is an ADT where insertions & deletions follow the LIFO (last-in first-out) principle. The last object added will be the first to be removed.
+		- We say a stack has a top & bottom. Both inserting (PUSHING) and deleting (POPPING) happens at the top of the stack (to ensure LIFO).
+		- Using a stack, you can only access obj. at the top; cannot access, add to, or remove from any other point in the stack.
+	- Methods:
+		push(e) - adds e to top of stack.
+		pop() - removes and returns top element (or null if empty).
+		top() - returns top element w/o removal.
+		size() - returns number of elements in stack.
+		isEmpty() - true if empty, false if not.
+	- Array-based stack implementation: We create an ArrayStack class using an array. We need to keep track of where the top of our stack is.
+		- We can do this by using an int variable that keeps track of the top index. Have it start at -1 (for empty stack). Throw exception if full.
+		- push(E e): top++; data[top] = e; //top = 0, points to e. O(1)
+		- pop(): E temp = data[top]; data[top] = null; top--; return temp; //O(1)
+		- Limited by size. If we want to increase capacity, we would need to resize.
+	- LL-based stack implementation: head will represent top of stack.
+		- push(E e): list.addToHead(e);
+		- pop(): list.removeHead();
+		- top(): list.getHead();
+		- size(): list.size(); isEmpty(): list.isEmpty();
+		- All of these operations are O(1).
+	- A CALL STACK is a stack languages use that keeps track of the chain of active methods that occur when a program calls multiple functions within others.
+		- When a method is called, we push a STACK FRAME onto the call stack with info. on our method. When the method returns, we pop the stack frame and give control to the next stack frame at the top of our stack.
+		- Used frequently with recursive methods; each recursive call of the method pushes to to the top of the stack until a base case is reached. Then it returns the top by popping the last value obtained and successively pops until the stack is empty.
+	- A QUEUE is an ADT where insertions & deletions follow FIFO (first-in first-out) principle. The first object added will be the first removed.
+		- We say the queue has a front and back. Inserting (ENQUEUEING) to the back and deleting (DEQUEUEING) from the front (or vice versa) ensures FIFO.
+		- Using a queue, you can only access the object at the front. You cannot access, add to, or remove from any other point in the queue.
+	- Methods:
+		enqueue(e) - adds e to back of queue.
+		dequeue() - removes & returns front element (or null if empty).
+		first() - returns the front element w/o removal.
+		size() - returns number of elements in queue.
+		isEmpty() - true if empty, false if not.
+	- Array-based queue implementation: We create an ArrayQueue class using an array. We will store elements in a fixed size array. ArrayQueue needs to keep track of not only the top but the bottom as well because we operate from two different ends.
+		- Use an int variable front to keep track of front index (front = 0).
+		- Have a size variable (size = 0).
+			- To get to the back: (front + size) % data.length;
+			- Getting a size from a front and back var. is not convenient 
+			(consider when back < front).
+	- Enqueueing and dequeueing are O(1) operations. Still constrained by size.
+	
+
+
+
+
+
+
+

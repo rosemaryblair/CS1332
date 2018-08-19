@@ -1,0 +1,27 @@
+
+
+Open addressing:
+	- When we have a collision at an index, we find alt. loc'ns inside the array until we find our entry at an index.
+
+Linear probing:
+	- Method where given an index i = hashFunction(key) % arr.length, if we have a collision at index i, we will check sequential cells at i+1, i+2, ... until we find our entry with our key.
+	- For add/searching, we start out with i, then continually increment i until we find an empty cell.
+	- For removing, we cannot simply find our entry and delete the cell (e.g. if all entries hashed at index 1, can't just delete index 1).
+		- We will do a lazy removal by not removing our entry, but marking it with a flag value and pretending it's removed.
+		- Boolean FLAG indicates if something is removed or not (w/o actually setting it equal to null, just acting as if it were not there by marking it).
+		- Flagged entries can be removed later (e.g. when resizing an array, copying the entries that aren't flagged).
+		- Introduces new step: checking if entry is flagged or not.
+
+Quadratic probing:
+	- Probing method where given an index i, if we have a collision at i, we will check cells following this equation:
+		index i = (hashFunction(key) + c1 * p + c2 * p^2) % arr.length;
+			// c1, c2 constants, p is the current probe number attempt
+
+Double Hashing:
+	- Probing method where instead of having 1 hash function, we use 2.
+	- index i = (h1(key) + p* h2(key)) % arr.length; (h1, h2 diff. hash functions)
+
+Hash Map Analysis:
+	- Add/search/remove are all O(1) on avg.
+	- Worst case O(n) which could hjappen by bad hash func./load factor
+	- It's good to have array lengths of prime numbers

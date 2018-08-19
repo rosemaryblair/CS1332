@@ -1,0 +1,33 @@
+Singly Linked Lists:
+
+- Add method (recursive):
+
+void add(data) {
+	head = addHelper(data, head);
+}
+
+node addHelper(data, node) {
+	if (node == null) {
+		return new Node(data);
+	} else {
+		node.next = addHelper(data, node.next);
+		return node;
+	}
+}
+
+- Remove method (recursive):
+
+void remove(data) {
+	head = removeHelper(data, head);
+}
+
+node removeHelper(data, node) {
+	if (node == null) {
+		return null;
+	} else if (node.data == data) {
+		return node.next;
+	} else {
+		node.next = removeHelper(data, node.next)
+		return node;
+	}
+}

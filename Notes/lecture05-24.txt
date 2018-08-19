@@ -1,0 +1,105 @@
+May 24, 2018
+
+- Summary:
+	- Stacks: ADT with LIFO insertion/deletion properties. Think stack of plates.
+	- Queues: ADT with FIFO insertion/deletion properties. Think line of people.
+	- Deques: ADT acting as a double-ended queue. Can add or remove elements to the front or back.
+
+- Trees are structures where nodes have a parent-child relationship; used for hierarchical structures.
+	- Do not have cycles, so a child's left or right pointer cannot point to an ancestor.
+
+- Root node: node without a parent; leaf node: node without children.
+- Internal node: node with at least one child.
+- Parent node of N: node that N is a child of; ancestors of node N: parent, grandparent, great-grandparent, etc.
+- Children of node N: nodes that N is a parent of; descendents of node N: children, grandchildren, great-grandchildren.
+- Subtree of node N: the tree consisting of N and its descendants.
+
+- Height of node N: # of nodes needed to get from N to its deepest leaf node (leaf node has height of 0).
+- Depth of node N: # of nodes needed to get from N to the root (root has a depth of 0). 
+
+- Binary trees are trees where each node has at most 2 children.
+	- Binary search tree: binary trees with special binary search property.
+	- For a node N, N's data is greater than N's left subtree and less than N's right subtree.
+	- Sorted singly linked list is an example of a binary search tree.
+
+- Tree shapes:
+	1. Complete tree: all nodes are added top-bottom and left-right.
+	2. Full tree: all nodes either have 0 or 2 children.
+	3. Perfect tree: combination of the first 2; all nodes added top-bottom, left-right and either have 0 or 2 children and tree is symmetric.
+
+- Binary search tree operations:
+	* Tip: do things recursively, iteratively isn't as efficient *
+
+	- Search method:
+		- Base cases: found data -> return true; not found data -> return false
+		- Recursive cases: getting closer to one of the base cases
+
+	-- CODE --
+	boolean search(data)
+		return searchHelper(data, root);
+
+	boolean searchHelper(data, node)
+		if (node == null) { return false; }
+		else if (node.data == data) { return true; }
+		else {
+			if (data < node.data) { // go left
+				return searchHelper(data, node.left);
+			} else { // go right
+				return searchHelper(data, node.right);
+			}
+		}
+
+	- Add method:
+
+	-- CODE --
+	void add(data) {
+		head = addHelper(data, head);
+	}
+
+	node addHelper(data, node) {
+		if (node == null) {
+			return new Node(data);
+		} else {
+			if (data < node.data) {
+				node.left = addHelper(data, node.left);
+				return node;
+			} else {
+				node.right = addHelper(data, node.right);
+				return node;
+			}
+		}
+	}
+
+
+
+
+-- CODE --
+
+public class TreeNode<E> {
+	public E data;
+	public TreeNode<E> left, right;
+	public TreeNode(E data) {
+		this.data = data;
+	}
+
+	public static void main(String[] args) {
+		TreeNode<String> me = new TreeNode<>("me");
+		TreeNode<String> me2 = new TreeNode<>("me2");
+		TreeNode<String> me3 = new TreeNode<>("me3");
+		TreeNode<String> me4 = new TreeNode<>("me4");
+		TreeNode<String> me5 = new TreeNode<>("me5");
+		TreeNode<String> me6 = new TreeNode<>("me6");
+		TreeNode<String> me7 = new TreeNode<>("me7");
+	}
+}
+
+(Q1) Given the code above, write code to connect the diagram.
+
+	me.left = me2;
+	me3.left = me5;
+	me5.left = me7;
+	me3.right = me4;
+	me2.right = me6;
+	me.right = me3;
+
+

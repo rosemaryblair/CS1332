@@ -1,0 +1,41 @@
+
+Data Structure Representation:
+- Sequences: LL
+- Hierarchy/Decision-making: trees
+- Key-Value associations: maps
+- Entity & Relationships ??
+
+What is a graph?
+- Set of vertices and edges.
+	- Vertex: represents an entity
+	- Edge: connectin between two entities.
+- Path: a sequence of vertices where each vertex is connected to the next vertex.
+- Cycle: A path that starts and ends with the same vertex.
+- Sub graph: a subset of vertices and edges.
+
+Types of graphs:
+- Sparse: graph has few edges compared to vertices.
+- Dense: graph has many edges compared to vertices.
+
+- Connected: all pairs of vertices are connected by a path.
+- Disconnected: not connected graph.
+
+- Weighted: edges have a numeric value.
+- Undirected: edges are bidirectional.
+- Directed: edges are unidirectional.
+- Cyclic: graph as a cycle.
+- Acyclic: graph has no cycles.
+
+What type of graph is a Tree?
+- Undirected, acyclic graph.
+
+Representing graphs:
+- Edge List: graph is stores as a list of all edges in the graph
+	- Pros: very simple to implement
+	- Cons: time consuming to search, O(|E|) look up time, hard to find paths
+- Adjacency List: represented as a list of vertices where each vertex has a list of all neighboring vertices.
+	- Pros: for sparse graphs, very space efficient, getting all neighbors is efficient.
+	- Cons: testing whether two vertices are connected is O(|V|)
+- Adjacency Matrix: V x V matrix, Matrix(u,v) represents edge (u,v)
+
+

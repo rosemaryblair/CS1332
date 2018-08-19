@@ -1,0 +1,22 @@
+
+Binary Trees:
+	- Type of tree where each child has at most 2 children.
+	- Height of a node N: the number of nodes to get from N to its deepest leaf node; leaves have a height of 0.
+		- height(Node n) = max(n.right.height, n.left.height) + 1;
+	- Internal nodes: nodes with at least 1 child.
+	- External nodes: nodes that have no children (i.e. leaf nodes).
+	- Depth/Level of a node N: the number of nodes to get from N to the root; root has depth of 0.
+	- Successor of a node N: the leftmost (smallest) node in N.right subtree.
+	- Predecessor of a node N: the rightmost (largest) node in N.left subtree.
+	- Tree shapes:
+		- Complete: every level above bottom is completely filled, and the bottom is filled left to right.
+		- Full: every node has 0 or 2 children only.
+		- Perfect: all nodes have 2 children except for leaves, tree is symmetrical/triangular for all levels.
+
+- BSTs:
+	- Binary trees with BST property: for any node N, N.left < N < N.right.
+	- Add(data): (Recursive)
+		1. In public method, root = add(data, root).
+		2. In private method:
+			a. Base case: if (node == null) { return new Node(data); }
+			b. cx 

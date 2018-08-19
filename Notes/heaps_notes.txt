@@ -1,0 +1,87 @@
+
+Heaps
+
+- Imagine: we hold a rubik's cube tournament in class and record all the times. We want to create a program that takes in student solving times over time and we only want to know who is in 1st place (and knowing this info at constant time).
+	- We could keep track of a best time and dismiss worse times.
+	- But what if the fastest student cheated? We would dismiss this time and get the 2nd best time... But we dismissed it previously because it wasn't faster.
+	- We could create a LL of times and add times to maintain ascending order.
+		- The fastest student would be at the head, retrieving this is O(1).
+		- If they cheated, we can remove the head in O(1) time as well to get the new fastest time.
+		- But if we're adding the worst times, we are adding to a LL at O(n) time.
+	- We could use a binary tree with a certain property to achieve:
+		- Retrieving the fastest time in O(1).
+		- Removing the fastest time in O(1).
+		- Adding new times in O(logn).
+
+- A HEAP is a tree DS that will always return the best value (i.e. root) in O(1).
+	- Two types:
+		1. Min heap: the root value is the minimum value.
+		2. Max heap: the root value is the maximum value.
+
+- A BINARY HEAP is a heap in the form of a binary tree.
+	- To achieve heaps main functionality, our BT needs 2 properties:
+		1. COMPLETE TREE PROPERTY: each level must be completely filled except for the lowest level, which must be filled left to right.
+		2. HEAP PROPERTY: For any node N, N.data must be better than N.child.data for all children.
+			- Because this is a binary heap and not a BST, the data relationship between children does not have to maintain order.
+	- The root will contain the best value. Like any other tree, it is the only node that can be accessed.
+
+- Heap tree to heap array:
+	- Maintaining a tree-node structure for our heap can be tedious; adds/removes can be complicated to maintain both properties.
+	- Level-order traversal of heap binary tree:
+		- root = 1; //makes simpler equations, see below
+		- leftChild = 2*i + 1; rightChild = 2*i + 2;
+		- parentIndex = (i-1)/2;
+	- Operations:
+		- add(E e): 
+			- complete TP: insert e into next open index (index size)
+			- heap P: move data e up until the heap prop is maintained
+				- We can manip. index by comparing e with e.parent. If e < e.parent,
+				we can swap values. Continue until e > e.parent's data.
+			- This is O(logn); the number of nodes on the path from the index size to root is the HEIGHT of the heap (logn).
+		- removeMin():
+			- complete TP: remove our root by replacing root w/ last index of our heap, thus ruining the complete tree
+			- heap P: move the root down until heap prop. is maintained
+				- Manip. index (has at most 2 children), pick less of the two, if arr[index] < arr[smallerChild], swap. Continue until you can't swap.
+			- Also, O(logn); max number of manip. index is the height of the heap.
+
+- Building a heap: given a regular array or BT that is complete, how do we rearrange this into a heap?
+	- Assuming we have n nodes, we can start at n/2 and call heapDown() from nodes n to 1.
+		heapDown(index) {
+			if (2*index <= size) {
+				child = 2*index;
+				if (child + 1 <= size) {
+					child = minIndex(arr[child], arr[child+1]);
+				}
+				if (arr[child] < arr[index]) {
+					swap(index, child);
+					heapDown(child);
+				}
+			}
+		}
+	- By starting at level 1 (above leaves) and going to level logn (root), for every node i, the subtrees of the children are assumed to already by heaps.
+	- This is O(nlogn) for n nodes, we call heapDown() which is O(logn). The tighter bound is O(n).
+
+- A PRIORITY QUEUE is a DS that when given a set of data w/ a sortable property, will dequeue data in that sorted order (priority).
+	- Ex: enqueueing a random list of ppl and dequeueing based on youngest age.
+	- Because enqueueing order doesn't matter but dequeueing must return best value, a heap would be a good choice for a PQ implementation.
+		- Other uses: search algo's, CPU schedulers, load-balancing jobs.
+
+- BST operations:
+	- When removing, there are three situations to consider:
+		1. Node has no children (leaf node).
+		2. Node has 1 child.
+		3. Node has 2 children.
+	- In (1), removing a node with no children is rather easy. We set the left/right parent node of our leaf (dep. on where it is) to null.
+	- In (2), we are removing a node n that has 1 child. For the parent node of n, set the left/right (whichever n is) to that 1 child of n. This child is the only node that can replace n and still maintain BST property.
+	- In (3), removing a node n with 2 children becomes tricky.
+		- We must find the sucessor (or predecessor) and copy this successor's data into n. Then, we remove the successor from the n.right subtree.
+	- On average, our BST op's run in O(logn). Worst case, O(n).
+	- Performance of the BST depends on the order of add/removes.
+
+- Tree traversals: traversing entire trees systematically.
+	- PRE-ORDER TRAVERSAL: performing an action of current node n, then traverse into children.
+	- POST-ORDER TRAVERSAL: traverse into children of node n first, then perform action on n after.
+	- IN-ORDER TRAVERSAL: for current node n, traverse left, perform action on n, traverse right.
+	- LEVEL-ORDER TRAVERSAL: traverse the tree by level (top to bottom).
+		- We don't use recursion for this, rather we use a queue.
+		- Have an empty queue, enqueue root into it, while q isn't empty: curr = q.dequeue; perform action on curr; q.enqueue curr's children. 

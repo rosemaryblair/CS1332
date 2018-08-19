@@ -1,0 +1,24 @@
+
+Rabin-Karp Example:
+
+- Alphabet: A B C D E, Hashes: 1 2 3 4 5
+- Text: A E A B D B E A C E E B E A
+- Pattern: B E A (2 + 5 + 1 = 8)
+
+(1) How many times are characters actually being compared?
+	9 - four blocks of string matched hash, but character comparisons only for those with characters in our patterns. Two matches found.
+
+Exam 2 Topics:
+
+- Trees:
+	- BST
+	- AVL
+	- Splay
+	- 2-4
+
+- HashMaps
+
+- Sorts:
+	- O(n^2): Bubble, Cocktail Shaker, Insertion, Selection
+	- O(nlogn): Merge, Quick (in-place)
+	- O(kn): Radix (LSD)

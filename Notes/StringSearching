@@ -1,0 +1,21 @@
+
+String Searching:
+
+- You're given a long string text (n) and a string pattern (m), and you want to find the pattern inside of the text.
+- Text and pattern comprised of characters from a finite set (the alphabet sigma).
+	- In our examples, we will use the English alphabet as out set of characters.
+	- Other examples may be the binary alphabet (sigma = {0, 1}), DNA bases (sigma = {A, C, T, G}), etc.
+- When performing a string search, the cost of the algorithm is the sum of character comparisons.
+	- Running time factors in the sizes of both our text and our pattern, so we include both m and n in our Big-O analysis (e.g. O(nm), O(n+m), etc.).
+- Used in DNA sequencing, text editors, online searches, etc.
+
+
+Brute Force String Search:
+
+- The "naive" method of string searching.
+- Given your text n and pattern m, you align the beginning of n and m and see if 
+n[0] == m[0]. If there's a match, then check n[1] == m[1], then n[2] == m[2], etc.
+- If there is a mismatch (n[i] != m[i]), then you shift m over by one character so now we compare n[1] == m[0].
+- You continue the search pattern until you find your string.
+- Worst case: O(mn), where we would compare the entire pattern every shift.
+

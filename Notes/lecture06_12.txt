@@ -1,0 +1,23 @@
+
+Problems with BST's:
+	- BST's try to achieve O(logn) complexity but can be unbalanced.
+	- Balanced: all layers full before leaf nodes. Difference of height is <= 1.
+
+Height of a Node:
+	- The max(n.left.height, n.right.height) + 1. For null, return -1.
+	- Have to recalculate the height each time, not an attribute of node class		
+
+	int height(Node n)
+		if n is null -> return -1
+		else
+			leftHeight = height(n.left)
+			rightHeight = height(n.right)
+			return max(leftHeight, rightHeight) + 1
+
+Balanced BST's:
+	- Difference between child's heights is no greater than 1.
+	- Unbalanced: there exits a node n where the height of n.left and n.right differ by more than 1.
+	- Balance factor: defines the difference in height of a node's child subtrees.
+		- Defined by: height(n.left) - height(n.right); *height(null) = -1.
+		- Say a node is balanced if the value is within [-1,1].
+		- Left heavy: BF > 1, right heavy: BF < -1

@@ -1,0 +1,119 @@
+05-31-18 *SCRIBE*
+
+-- HASH FUNCTIONS -- 
+
+- Writing a directory:
+	1. Functionalities:
+		- Search for a student and the program gives me that student's GPA
+		- Populate the directory by inserting a student and corres. GPA.
+		- Update student's GPA
+		- Delete a student's GPA
+	2. 
+	3.
+
+- How do we represent student information uniquely?
+	- GTID number
+	- Program will allow me to search for GTID and with this informtion we can return a unique studen't GPA
+	- Other examples: SSN, email, etc.
+	- The unique value is called a KEY
+
+- Our program requires us to use this unique info to perform functions:
+	- search(key): searches for the data of the key
+	- insert(key): inserts data for the key
+	- delete(key): searches and deletes data for key
+	- update(key): calls insert(key) to change data
+
+- How do we achieve O(1) (look-up) time for each of these functions?
+	- Arrays (and ArrayLists)
+	- Given an index i, we can access and store a value in O(1) time.
+
+- Since GTID are unique numbers, we can make them act as indices to our array, the element at index GTID can hold that student's GPA
+	- Making an array of this size is inefficient (too much space).
+	- GT doesn't have 900 milliom graduates so there will be a lot of empty spots.
+	- What can we do?
+		1. Give new GTIDs to students
+		2. Change the size of our array ***
+		3. Find another key that uniquely identifies students
+
+- Shortening the array:
+	- Let's shorten the array to a length 10.
+	- We cannot use our GTID to index the array... so how can we still use this for indexing?
+		- We can mod the GTID by the array size.
+		- This will give us a valid index in our array.
+		_ Now we can use the operations with these new indices.
+
+- Alternative unqiue information:
+	- If we could not access GTIDs, perhaps we can use gt user names (e.g. jkim866)
+	- With our array of size 10, how do we extract an index out of this string?
+		- We can come up with a function that converts strings to integers.
+
+- HASH FUNCTION converts its input into an integer value. The output is called a HASH VALUE.
+	- Compares ASCII values of each character in the string.
+	- Hash function is DETERMINISTIC: should always return the same hash value for the same input (consistency)
+	- Should not be dependent on randomness (time, probability, etc).
+	- In Java, all objects have a hashCode() method that digitizes the object returning an integer representation of the object.
+		- This can be overridden to implement your own hash function.
+
+- Our hash function will take in a string key as input and return the sum of the character ASCII values.
+	- hashFunction("jkim866") outputs 591
+	- 591 % arr.length = index = 1
+
+- Our functinoalities all can be implemented using:
+	- index = hashFunction(GT_login) % arr.length
+
+-- MAP ADT -- 
+
+- A MAP models a searchable collection of key-value entries (key = GTID, value = GPA).
+	- For each key, there is a single value associated with it (mapping function from key to value).
+	- Picking a unique key is important for good mapping.
+	- Mulitple keys can have the same value (e.g. many students can have the same GPA).
+
+- MAP ADT Operations
+	- get(key): returns the data of the index of the key
+	- put(key, value): returns old value at key index, replaces/puts data in at key
+	- remove(key): removes data at the key, returns the old value/null
+	- size() / isEmpty()
+	- entrySet(): returns a set of all entries in the map
+	- keySet(): returns a set of all keys in the map
+	- values(): returns list of all values in map
+
+- A HASH MAP (table) is a data structure that implements map using a backing array to store values and a hash function to hash keys to an index in the array.
+	- Since we're accessing elements in an array, our complexity should ideally give us O(1) search
+	- Hash Map & Hash Table
+
+-- COLLISION HANDLING --
+
+- What would happen if we tried to place an object into an index of one that already has an element in it?
+	- The code will automatically override the existing value and replace it.
+	- There are two major issues here:
+		1. The new data should not have overridden the existing  (they are not the same).
+		2. The only way we should be able to override an entry is if we explicitly use the existing key in put but with a new value associated with it.
+
+- How do we fix this?
+	- When we called the new data, it ended up indexing to an existing cell.
+	- We can check the indexed cell for if the keys match (only then should it override the data
+	- We can solve this by storing both the key and the value in the array cell.
+		- This means our array would be an array of entries.
+		- When we access an index, we check whether the key matches the new data.
+
+- EXTERNAL CHAINING: attaching something to the outside of the chain of values.
+	- For our array, store Linked Lists.
+		- Index to arr[index], which gives us a LL.
+		- If we do put() -> add to LL.
+	- Storing key & value into a LL for each index. The last entry in the LL will point to null. The first (if size of LL is > 1) will point to the next entry added at the same index.
+	- What if we hash to index 1 for all of our entries?
+		- Change the hash function; consider how your hash implementation could potentially give the same index values for different data.
+			- Summing ASCII values is not optimal, b/c many different strings could have the same sum.
+		- Create a larger array to reduce # of collisions.
+			- LOAD FACTOR: mathematical ratio of how many values are in our array and how large our array is (size/arr.length).
+				- MAX LOAD FACTOR: if my load factor goes beyond this value, then resize the array (optimal: ~0.5-0.75)
+				- LF only depends on what's in it and how large the container is.
+
+- If we resize:
+	- Create a larger array.
+	- Copy data over*.
+	- What happens if we have multiple collisions (e.g. 10 values at index 1 in a size 10 array)?
+		- *Cannot just copy data over.
+		- Iterate through all our indices.
+		- put(key, value) using our new array (and thus the new size).
+			- index = hashFunction(key) % newArr.length

@@ -1,0 +1,30 @@
+
+Problems with BST's:
+- BST try to achieve O(logn) complexity for its operations.
+	- Worst case, we get O(n) since BSTs can be very uneven.
+	- Can become unbalanced from series of add/remove's (e.g. adding in sorted order).
+- If we want to guarantee O(logn) operation time, we must consider how to balance the tree if unbalanced.
+
+Balanced vs. Unbalanced:
+- Recall that the HEIGHT of a node is defined by the max of the left and right child node heights  + 1 (for null child, return -1 as its height).
+	- This means that the height of a node depends on the (larger) height of its children.
+	- By definition, leaf nodes have height = 0.
+	- To find height of a node n, you can use recursion until you've reached the leaf node(s) (i.e. you reach null).
+		- Base Case: if node n is null, return -1.
+		- Approach to BC: 
+			leftHeight = height(n.left);
+			rightHeight = height(n.right);
+			return max(leftHeight, rightHeight) + 1;
+	- Note that this doesn't set heights/store heights for nodes. Each call for height(n) would have to recursively find the height for n again.
+- We say a tree is BALANCED if for any node n, the height of n.left and the height of n.right do not differ by more than 1. It is UNBALANCED if their heights differ by more than 1.
+
+Balance Factor:
+- The BALANCE FACTOR for a node n defines the difference in the height of n's child subtrees.
+	- It is defined by: height(n.left) - height(n.right) *(height(null) = -1).
+	- We say a node is balanced if its BF is within [-1,1].
+		- For a node n, it is LEFT HEAVY if its BF > 1, RIGHT HEAVY if its BF < -1.
+
+Fixing Unbalanced Trees:
+- A LEFT ROTATION is an balancing operation done on a tree that takes the root of a subtree and reassigns pointers so that the right child of the root becomes the new root of the subtree.
+	- For example, if you have (rootA) -> (B) -> (C), after a Left Rotation: 
+	(A) <- (rootB) -> (C)

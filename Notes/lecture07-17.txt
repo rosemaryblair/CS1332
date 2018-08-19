@@ -1,0 +1,9 @@
+
+Fibonacci - post-order traversal
+
+Dynamic Programming:
+- Method of problem solving by breaking down complex problems into smaller sub-problems.
+- Two parts:
+	1. Optimal substructure; DP is usually applied to optimization problems (requiring some min/max value).
+	2. Overlapping sub-problems; sub-problems are revisited repeatedly when solving the problem.
+

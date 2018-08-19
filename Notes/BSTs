@@ -1,0 +1,48 @@
+
+Removing a node from a BST: 3 cases
+
+(1) Deleting a leaf node (no children):
+	Remove the node by assigning its parent node right/left reference to null (whichever the deleted node is to parent). 
+(2) Deleting a node with 1 child:
+	Get the parent of the node and reassign its reference from the deleted node to the one child node of the deleted node.
+(3) Deleting a node with 2 children
+
+
+
+
+
+        // if (curr == null) {
+        //     return null;
+        // }
+        // if (data.compareTo(curr.getData()) < 0) {
+        //     return findSuccessor(curr.getLeft(), data, curr);
+        // } else if (data.compareTo(curr.getData()) > 0) {
+        //     return findSuccessor(curr.getRight(), data, suc);
+        // } else {
+        //     if (curr.getRight() != null) { //non-empty right subtree
+        //         return findMin(curr.getRight());
+        //     } else { //empty right subtree
+        //         return suc;
+        //     }
+        // }
+
+
+
+            private AVLNode<T> findSuccessor(AVLNode<T> curr, T data,
+        AVLNode<T> succ) {
+        if (curr == null) {
+            throw new java.util.NoSuchElementException(
+                "Data not found in tree.");
+        }
+        if (data.compareTo(curr.getData()) < 0) {
+            return findSuccessor(curr.getLeft(), data, curr);
+        } else if (data.compareTo(curr.getData()) > 0) {
+            return findSuccessor(curr.getRight(), data, succ);
+        } else {
+            if (curr.getRight() != null) {
+                return findMin(curr.getRight());
+            } else {
+                return succ;
+            }
+        }
+    }

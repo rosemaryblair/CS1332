@@ -1,0 +1,27 @@
+
+
+B-Tree:
+	- Self balancing tree of ordered data (left is less, right is greater).
+	- Each node can have [2, n] children and must have [1, n-1] data.
+		- Leaves are exceptions.
+	- B-Tree order: the max # of children each node can have.
+		- Order 2 B-Tree: nodes have 2 children and 1 data.
+		- Order 3 B-Tree: nodes have [2,3] children and [1,2] data.
+		- Order 4 B-Tree: nodes can have [2,4] children and [1,3] data.
+		- Order n B-Tree: nodes have [2,n] children and [1,n-1] data.
+
+Add:
+	- From root, traverse through children until you hit a leaf node.
+		- Similar to BST but you must pick the correct child route.
+	- Insert the data into the leaf node.
+	- If adding to a 4 node, add the data and then promote the 3rd data.
+	- PROMOTION: 3rd data in the overflowed 4-node moves to its parent. 
+
+Removing:
+	- With 2/3/4 nodes, removing from inner nodes (non-leaf) becomes more complicated, so we only remove data from leaf nodes.
+		- In the case of removal from an inner node, we find the successor.
+	- Our tree must have valid 2/3/4 nodes after removal, in least amount of steps possible.
+
+
+
+	

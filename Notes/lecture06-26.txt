@@ -1,0 +1,6 @@
+Quicksort Big-O:
+- Worst: O(n^2)
+- Avg/Best: O(nlogn)
+
+Exam 2:
+- AVLs, Hash Maps, Splay, 2-4 Trees, Sorting
